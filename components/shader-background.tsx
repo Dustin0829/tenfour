@@ -1,39 +1,18 @@
 "use client"
 
 import type React from "react"
+import dynamic from "next/dynamic"
 
-import { useEffect, useRef, useState } from "react"
-import { MeshGradient } from "@paper-design/shaders-react"
+const LightRays = dynamic(() => import("@/components/LightRays"), { ssr: false })
 
 interface ShaderBackgroundProps {
   children: React.ReactNode
 }
 
 export default function ShaderBackground({ children }: ShaderBackgroundProps) {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [isActive, setIsActive] = useState(false)
-
-  useEffect(() => {
-    const handleMouseEnter = () => setIsActive(true)
-    const handleMouseLeave = () => setIsActive(false)
-
-    const container = containerRef.current
-    if (container) {
-      container.addEventListener("mouseenter", handleMouseEnter)
-      container.addEventListener("mouseleave", handleMouseLeave)
-    }
-
-    return () => {
-      if (container) {
-        container.removeEventListener("mouseenter", handleMouseEnter)
-        container.removeEventListener("mouseleave", handleMouseLeave)
-      }
-    }
-  }, [])
-
   return (
-    <div ref={containerRef} className="min-h-screen bg-black relative overflow-hidden">
-      {/* SVG Filters */}
+    <div className="h-screen bg-black relative overflow-hidden">
+      {/* SVG Filters - used by hero-content glass-effect */}
       <svg className="absolute inset-0 w-0 h-0">
         <defs>
           <filter id="glass-effect" x="-50%" y="-50%" width="200%" height="200%">
@@ -61,20 +40,27 @@ export default function ShaderBackground({ children }: ShaderBackgroundProps) {
         </defs>
       </svg>
 
-      {/* Background Shaders */}
-      <MeshGradient
-        className="absolute inset-0 w-full h-full"
-        colors={["#000000", "#8b5cf6", "#ffffff", "#1e1b4b", "#4c1d95"]}
-        speed={0.3}
-        backgroundColor="#000000"
-      />
-      <MeshGradient
-        className="absolute inset-0 w-full h-full opacity-60"
-        colors={["#000000", "#ffffff", "#8b5cf6", "#000000"]}
-        speed={0.2}
-        wireframe="true"
-        backgroundColor="transparent"
-      />
+      {/* LightRays Background */}
+      <div
+        className="absolute inset-0 w-full"
+        style={{ height: "100%", position: "relative" }}
+      >
+        <LightRays
+          raysOrigin="top-center"
+          raysColor="#ffffff"
+          raysSpeed={1}
+          lightSpread={0.5}
+          rayLength={3}
+          followMouse={true}
+          mouseInfluence={0.1}
+          noiseAmount={0}
+          distortion={0}
+          className="custom-rays"
+          pulsating={false}
+          fadeDistance={1}
+          saturation={1}
+        />
+      </div>
 
       {children}
     </div>

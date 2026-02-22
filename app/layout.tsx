@@ -1,29 +1,16 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Figtree } from "next/font/google"
 import { GeistMono } from "geist/font/mono"
-import { Instrument_Serif } from "next/font/google"
 import "./globals.css"
 
-const figtree = Figtree({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-figtree",
-  display: "swap",
-})
-
-const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: ["400"],
-  style: ["normal", "italic"],
-  variable: "--font-instrument-serif",
-  display: "swap",
-})
-
 export const metadata: Metadata = {
-  title: "v0 App",
-  description: "Created with v0",
-  generator: "v0.app",
+  title: "Tenfour | Creative Production Team",
+  description: "Tenfour | Creative Production Team ",
+  generator: "Tenfour",
+  icons: {
+    icon: "/Logo.png",
+    apple: "/Logo.png",
+  },
 }
 
 export default function RootLayout({
@@ -34,16 +21,22 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Comme:wght@100..900&family=Instrument+Serif:ital,wght@0,400;1,400&display=swap"
+          rel="stylesheet"
+        />
         <style>{`
 html {
-  font-family: ${figtree.style.fontFamily};
-  --font-sans: ${figtree.variable};
+  --font-sans: var(--font-comme);
+  --font-comme: "Comme", system-ui, -apple-system, sans-serif;
   --font-mono: ${GeistMono.variable};
-  --font-instrument-serif: ${instrumentSerif.variable};
+  --font-instrument-serif: "Instrument Serif", Georgia, serif;
 }
         `}</style>
       </head>
-      <body className={`${figtree.variable} ${instrumentSerif.variable}`}>{children}</body>
+      <body className="font-comme">{children}</body>
     </html>
   )
 }
