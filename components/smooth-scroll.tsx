@@ -6,7 +6,7 @@ export default function SmoothScroll() {
   useEffect(() => {
     let ticking = false
     let lastScrollTime = 0
-    const throttleDelay = 8 // ~120fps for smoother feel
+    const throttleDelay = 4 // Faster response
 
     const handleWheel = (e: WheelEvent) => {
       const now = Date.now()
@@ -22,7 +22,7 @@ export default function SmoothScroll() {
         
         requestAnimationFrame(() => {
           const currentScroll = window.pageYOffset || window.scrollY
-          const scrollAmount = e.deltaY * 0.75 // Reduce scroll speed by 25% for slightly heavier feel
+          const scrollAmount = e.deltaY * 0.9 // Only reduce scroll speed by 10% for lighter feel
           
           window.scrollTo({
             top: currentScroll + scrollAmount,

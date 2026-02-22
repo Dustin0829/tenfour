@@ -30,7 +30,7 @@ export default function Navbar() {
       const elementRect = element.getBoundingClientRect()
       const targetPosition = elementRect.top + startPosition - 80 // Offset for navbar
       const distance = targetPosition - startPosition
-      const duration = 800 // Faster, lighter scroll
+      const duration = 600 // Much faster, lighter scroll
       let start: number | null = null
 
       const easeInOutCubic = (t: number): number => {
