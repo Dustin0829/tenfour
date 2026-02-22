@@ -10,7 +10,6 @@ import ProjectSection from "@/components/project-section"
 import AboutSection from "@/components/about-section"
 import ContactSection from "@/components/contact-section"
 import Footer from "@/components/footer"
-import SmoothScroll from "@/components/smooth-scroll"
 import ChunkErrorHandler from "@/app/chunk-error-handler"
 
 const ShaderBackground = dynamic(
@@ -25,7 +24,6 @@ export default function ShaderShowcase() {
   return (
     <>
     <ChunkErrorHandler />
-    <SmoothScroll />
     <ShaderBackground>
       <HeroCarousel />
       <Navbar />

@@ -1,3 +1,9 @@
+import { fileURLToPath } from 'url'
+import { dirname } from 'path'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   typescript: {
@@ -8,6 +14,15 @@ const nextConfig = {
   },
   // Generate stable chunk names for better caching
   webpack: (config, { dev, isServer }) => {
+    // Fix webpack cache warnings
+    config.cache = {
+      ...config.cache,
+      type: 'filesystem',
+      buildDependencies: {
+        config: [__filename],
+      },
+    }
+    
     if (!isServer && !dev) {
       // In production, use deterministic chunk names
       config.optimization = {
